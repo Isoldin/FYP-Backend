@@ -3,10 +3,11 @@ import models
 from database import engine
 from typing import Annotated
 from starlette import status
-from routes import auth
+from routes import auth, pagination
 
 app = FastAPI()
 app.include_router(auth.router)
+app.include_router(pagination.router)
 
 models.Base.metadata.create_all(engine)
 
