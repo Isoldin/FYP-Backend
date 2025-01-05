@@ -10,6 +10,7 @@ app.include_router(auth.router)
 app.include_router(pagination.router)
 app.include_router(prediction.router)
 
+models.Base.metadata.drop_all(engine)
 models.Base.metadata.create_all(engine)
 
 user_dependency = Annotated[dict, Depends(auth.get_current_user)]
