@@ -1,18 +1,16 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from typing import List, Annotated
-from database import get_db
 from models import Users
 from schemas import UserPaginationResponse, UserPaginationRequest
 from starlette import status
 from sqlalchemy import asc, desc
+from dependencies import db_dependency
 
 router = APIRouter(
     prefix="/pagination",
     tags=["pagination"]
 )
-
-db_dependency = Annotated[Session, Depends(get_db)]
 
 @router.get("/users", response_model=List[UserPaginationResponse], status_code=status.HTTP_200_OK)
 def get_users(

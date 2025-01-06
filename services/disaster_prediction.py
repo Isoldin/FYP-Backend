@@ -26,9 +26,8 @@ def disaster_predict(image_path: str):
 
     prediction = model.predict(img)
 
-    # Convert predictions to a JSON-compatible format
     predicted_class_index = np.argmax(prediction, axis=1)[0]
     predicted_class = CLASS_LABELS[predicted_class_index]
-    probabilities = {CLASS_LABELS[i]: float(prediction[0][i]) for i in range(len(CLASS_LABELS))}
+    probability = float(prediction[0][predicted_class_index])
 
-    return {"predicted_class": predicted_class, "probabilities": probabilities}
+    return {"predicted_class": predicted_class, "probability": probability}

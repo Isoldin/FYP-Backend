@@ -1,6 +1,5 @@
 from typing import Optional
 from pydantic import BaseModel, Field
-from models import Users
 
 class CreateUserRequest(BaseModel):
     username: str
@@ -22,3 +21,8 @@ class UserPaginationResponse(BaseModel):
     user_id: int
     username: str
     role: str
+
+class UploadImageRequest(BaseModel):
+    img_name: str
+    geolocation: dict
+    type_of_disaster: str

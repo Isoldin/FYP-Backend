@@ -9,11 +9,11 @@ class Users(Base):
     hashed_password = Column(String)
     role = Column(String)
 
-# class UploadedImages(Base):
-#     __tablename__ = 'uploaded_images'
-#     image_id = Column(Integer, primary_key=True)
-#     image_path = Column(String, nullable=False)
-#     geolocation = Column(JSON, nullable=False)
-#     type_of_disaster = Column(String, nullable=False)
-#     uploaded_by = Column(String, ForeignKey('users.user_id'))
-#     uploaded_date = Column(DateTime, default=datetime.now(timezone.utc))
+class UploadedImages(Base):
+    __tablename__ = 'uploaded_images'
+    image_id = Column(Integer, primary_key=True)
+    img_name = Column(String, nullable=False)
+    geolocation = Column(JSON, nullable=False)
+    type_of_disaster = Column(String, nullable=False)
+    uploaded_by = Column(Integer, ForeignKey('users.user_id'))
+    uploaded_date = Column(DateTime, default=datetime.now(timezone.utc))
