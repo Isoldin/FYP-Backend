@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 from ultralytics import YOLO
 
-model = YOLO('prediction_models/human_detection_model/yolov9c.pt')
+model = YOLO('prediction_models/human_detection_model/best.pt')
 
 def detect_and_plot_human(image_path: str):
     img = cv2.imread(image_path)

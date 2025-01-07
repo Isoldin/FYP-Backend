@@ -23,14 +23,5 @@ app.include_router(pagination.router)
 app.include_router(prediction.router)
 app.include_router(upload.router)
 
-models.Base.metadata.drop_all(engine)
-models.Base.metadata.create_all(engine)
-
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.mount("/prediction_results", StaticFiles(directory="prediction_results"), name="prediction_results")
-
-@app.get("/", status_code=status.HTTP_200_OK)
-async def root(user: user_dependency):
-    if user is None or user.get('role') != "client":
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
-    return {"User": user}
