@@ -1,8 +1,7 @@
 from fastapi import Depends, APIRouter
-from sqlalchemy.orm import Session
-from typing import List, Annotated
-from models import Users
-from schemas import UserPaginationResponse, UserPaginationRequest
+from typing import List, Annotated, Optional
+from models import UploadedImages
+from schemas import UploadedImagesPaginationResponse, UploadedImagesPaginationRequest
 from starlette import status
 from sqlalchemy import asc, desc
 from dependencies import db_dependency
@@ -12,24 +11,25 @@ router = APIRouter(
     tags=["pagination"]
 )
 
-@router.get("/users", response_model=List[UserPaginationResponse], status_code=status.HTTP_200_OK)
-def get_users(
-    request: Annotated[UserPaginationRequest, Depends()],
+@router.get("/uploaded_image", response_model=List[UploadedImagesPaginationResponse], status_code=status.HTTP_200_OK)
+def paginate_uploads(
+    request: Annotated[UploadedImagesPaginationRequest, Depends()],
     db: db_dependency
 ):
-    query = db.query(Users)
-    if request.search_username:
-        query = query.filter(Users.username.ilike(f"%{request.search_username}%"))
-    if request.search_role:
-        query = query.filter(Users.role.ilike(f"%{request.search_role}%"))
+    query = db.query(UploadedImages)
+    if request.search_user_id:
+        query = query.filter(UploadedImages.uploaded_by==request.search_user_id)
 
     # Apply sorting
     if request.sort_order == "asc":
-        query = query.order_by(asc(getattr(Users, request.sort_by)))
+        query = query.order_by(asc(getattr(UploadedImages, request.sort_by)))
     else:
-        query = query.order_by(desc(getattr(Users, request.sort_by)))
+        query = query.order_by(desc(getattr(UploadedImages, request.sort_by)))
 
     # Apply pagination
-    users = query.offset(request.skip).limit(request.limit).all()
-    return users
+    if request.limit == 0:
+        uploaded_images = query.all()
+    else:
+        uploaded_images = query.offset(request.skip).limit(request.limit).all()
 
+    return uploaded_images
