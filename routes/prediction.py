@@ -33,7 +33,3 @@ async def predict_disaster(img_name: str):
     image_path = UPLOAD_DIR / img_name
     result = disaster_predict(str(image_path))
     return result
-
-@router.get('/get_summary', status_code=status.HTTP_200_OK)
-def get_summary():
-    return get_model_summary()
