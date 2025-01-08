@@ -1,5 +1,3 @@
-import os
-from pathlib import Path
 import cv2
 from ultralytics import YOLO
 
@@ -16,8 +14,8 @@ def detect_and_plot_human(image_path: str):
             conf = float(box.conf.cpu().numpy())
 
             #logic to plot the detected human
-            cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 1)
+            cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
             label = f'{conf:.2f}'
-            cv2.putText(img, label, (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255, 0, 0), 1)
+            cv2.putText(img, label, (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.25, (255, 0, 0), 2)
 
     return img

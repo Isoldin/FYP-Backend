@@ -1,0 +1,12 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"alembic revision --autogenerate -m "Initial migration"
+
+[packages]
+alembic = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
